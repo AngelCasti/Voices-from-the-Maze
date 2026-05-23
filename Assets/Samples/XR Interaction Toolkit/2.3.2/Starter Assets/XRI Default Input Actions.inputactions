@@ -1474,12 +1474,12 @@
         },
         {
             "name": "XRI RightHand Locomotion",
-            "id": "99ce76d3-82c5-4289-9670-2ecffa6833fd",
+            "id": "d47081c3-b55d-4053-9dda-b4f5e00774cc",
             "actions": [
                 {
                     "name": "Teleport Select",
                     "type": "Value",
-                    "id": "02e43582-8973-4940-af06-dff6158e3df2",
+                    "id": "f46f07b1-5193-4e33-9c13-0bf91671e2b2",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1488,7 +1488,7 @@
                 {
                     "name": "Teleport Mode Activate",
                     "type": "Value",
-                    "id": "a6c7231d-c55d-4dd4-9e87-877bb5522ef5",
+                    "id": "66160cde-5b42-40b6-81a8-bbbe31156109",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1497,7 +1497,7 @@
                 {
                     "name": "Teleport Mode Cancel",
                     "type": "Button",
-                    "id": "d587b60c-39a0-4365-8075-477ce484ba0f",
+                    "id": "e592cb7c-180d-4172-a498-5da1c549e1a2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1506,7 +1506,7 @@
                 {
                     "name": "Teleport Direction",
                     "type": "Value",
-                    "id": "b950a329-6492-4e29-b563-afc726f81e95",
+                    "id": "1cb05683-85ed-47a3-96ca-b54eaf2f78d8",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1515,7 +1515,7 @@
                 {
                     "name": "Turn",
                     "type": "Value",
-                    "id": "9fb2eb2b-2fb6-4328-8167-10a1bf11b424",
+                    "id": "7875252d-bec1-4748-bced-3274c6d0fa6d",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1524,7 +1524,7 @@
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "00a4dc9f-1ee6-4349-b0e9-72d5dccaadd6",
+                    "id": "b5b63442-22c0-40d0-a1a1-c4d64c715318",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1533,7 +1533,7 @@
                 {
                     "name": "Grab Move",
                     "type": "Button",
-                    "id": "cfb29d37-3db0-4e5d-a73b-7d48a19e279e",
+                    "id": "958f257c-1aae-4022-8cc9-95a7314f43c5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1542,17 +1542,26 @@
                 {
                     "name": "Snap Turn",
                     "type": "Value",
-                    "id": "44441ad6-5762-466d-ad54-aa44fcd61a5c",
+                    "id": "e0ac96a5-07a8-4c14-863a-448d666610b7",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "c0cfcccb-cba7-4fb0-9546-dd13375f9ec2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "919c4a6c-22ed-4083-8e14-f30e91ff59fe",
+                    "id": "54753689-5418-4330-b381-f1bb1d3c97db",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "Sector(directions=-1,sweepBehavior=3)",
                     "processors": "",
@@ -1563,7 +1572,7 @@
                 },
                 {
                     "name": "",
-                    "id": "62690862-4688-4010-975b-b3d9c6062157",
+                    "id": "9ac0ae3e-4739-43bc-8e0d-0a9859d0f93b",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "Sector(directions=1)",
                     "processors": "",
@@ -1574,7 +1583,7 @@
                 },
                 {
                     "name": "",
-                    "id": "de466e6e-12bf-46a1-b0fd-ffbc343f3399",
+                    "id": "e6408ebe-cca7-4791-a27c-06c6814ae714",
                     "path": "<XRController>{RightHand}/gripPressed",
                     "interactions": "",
                     "processors": "",
@@ -1585,7 +1594,7 @@
                 },
                 {
                     "name": "",
-                    "id": "d6c08c3d-3d41-4695-994d-1ac9016a5a9e",
+                    "id": "eedc6792-9096-4fed-9ad4-1e71d2d5185f",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "Sector(directions=12,sweepBehavior=1),Sector(directions=2,sweepBehavior=2)",
                     "processors": "",
@@ -1596,7 +1605,7 @@
                 },
                 {
                     "name": "",
-                    "id": "022046aa-be71-4288-859d-6dd42844f6e6",
+                    "id": "5d922da5-be35-45c9-a3ce-116917b257e6",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "",
                     "processors": "StickDeadzone",
@@ -1607,7 +1616,7 @@
                 },
                 {
                     "name": "",
-                    "id": "c4b46d7d-8231-4672-83f9-75af565faf57",
+                    "id": "d891ba51-20f4-40a4-8ac9-57339cb1effe",
                     "path": "<XRController>{RightHand}/primary2DAxis",
                     "interactions": "",
                     "processors": "",
@@ -1618,7 +1627,7 @@
                 },
                 {
                     "name": "",
-                    "id": "7ecb549e-ab98-4a4b-b979-38068fe3b811",
+                    "id": "20b27f6b-5932-4268-b920-a7844cd0d0d1",
                     "path": "<XRController>{RightHand}/gripPressed",
                     "interactions": "",
                     "processors": "",
@@ -1629,12 +1638,23 @@
                 },
                 {
                     "name": "",
-                    "id": "31d838df-4d4e-4c16-a373-b9c07d9d2e2a",
+                    "id": "16122ca9-f805-4684-9daf-406e33d73632",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "Sector(directions=12,sweepBehavior=1),Sector(directions=2,sweepBehavior=2)",
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Snap Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "314442f6-aada-48ce-b0ef-3766fabb54e4",
+                    "path": "<XRController>{RightHand}/primary2DAxisClick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
