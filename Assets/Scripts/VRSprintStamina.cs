@@ -26,15 +26,15 @@ public class VRSprintStamina : MonoBehaviour
     private float lastSprintTime;
     private bool isSprinting;
 
-    private void Awake()
-    {
-        currentStamina = maxStamina;
+private void Awake()
+{
+    currentStamina = maxStamina;
 
-        sprintAction = new InputAction("Sprint", InputActionType.Button);
+    sprintAction = new InputAction("Sprint", InputActionType.Button);
 
-        // sprintAction.AddBinding("<XRController>{RightHand}/primary2DAxisClick");
-        sprintAction.AddBinding("<OculusTouchController>{RightHand}/thumbstickClicked");
-    }
+    sprintAction.AddBinding("<OculusTouchController>{RightHand}/thumbstickClicked");
+    sprintAction.AddBinding("<OculusTouchController>{LeftHand}/thumbstickClicked");
+}
 
     private void OnEnable()
     {
