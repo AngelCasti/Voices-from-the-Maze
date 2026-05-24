@@ -7,6 +7,12 @@ public class VRSprintStamina : MonoBehaviour
 {
     [Header("Movimiento")]
     public ContinuousMoveProviderBase moveProvider;
+    private float defaultSpeed;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip tiredSound;
+    private bool hasPlayedTiredSound = false;
 
     [Header("Velocidades")]
     public float normalSpeed = 1.5f;
@@ -25,83 +31,99 @@ public class VRSprintStamina : MonoBehaviour
     private float currentStamina;
     private float lastSprintTime;
     private bool isSprinting;
+    private bool isExhausted = false;
 
-private void Awake()
-{
-    currentStamina = maxStamina;
-
-    sprintAction = new InputAction("Sprint", InputActionType.Button);
-
-    sprintAction.AddBinding("<OculusTouchController>{RightHand}/thumbstickClicked");
-    sprintAction.AddBinding("<OculusTouchController>{LeftHand}/thumbstickClicked");
-}
-
-    private void OnEnable()
+    private void Awake()
     {
-        sprintAction.Enable();
+        currentStamina = maxStamina;
+        defaultSpeed = moveProvider.moveSpeed;
+
+        sprintAction = new InputAction("Sprint", InputActionType.Button);
+        sprintAction.AddBinding("<OculusTouchController>{RightHand}/thumbstickClicked");
+        sprintAction.AddBinding("<OculusTouchController>{LeftHand}/thumbstickClicked");
+        sprintAction.AddBinding("<Keyboard>/leftShift");
     }
 
-    private void OnDisable()
-    {
-        sprintAction.Disable();
-    }
+    private void OnEnable() { sprintAction.Enable(); }
+    private void OnDisable() { sprintAction.Disable(); }
 
     private void Update()
     {
-        if (moveProvider == null)
-            return;
+        if (moveProvider == null) return;
 
+        bool isMoving = moveProvider.gameObject.GetComponent<CharacterController>().velocity.magnitude > 0.1f;
         bool sprintButtonPressed = sprintAction.IsPressed();
 
-        if (sprintButtonPressed && currentStamina > 0f)
+        // 1. Lógica de Sprint (Drenaje)
+        if (sprintButtonPressed && isMoving && currentStamina > 0f && !isExhausted)
         {
-            StartSprint();
-        }
-        else
-        {
-            StopSprint();
-        }
-
-        if (isSprinting)
-        {
+            isSprinting = true;
+            moveProvider.moveSpeed = sprintSpeed;
+            
             currentStamina -= staminaDrainRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-            lastSprintTime = Time.time;
+            lastSprintTime = Time.time; // Reiniciamos el tiempo de espera para recuperar
 
             if (currentStamina <= 0f)
             {
-                StopSprint();
+                isExhausted = true;
+                StopSprintLogic();
+                PlayTiredSound();
             }
         }
         else
         {
+            // 2. Lógica de Recuperación
+            StopSprintLogic();
+            
             if (Time.time >= lastSprintTime + recoveryDelay)
             {
                 currentStamina += staminaRecoveryRate * Time.deltaTime;
                 currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+
+                if (currentStamina >= maxStamina)
+                {
+                    isExhausted = false;
+                    hasPlayedTiredSound = false;
+                }
             }
         }
 
         UpdateStaminaBar();
+        HandleBlinkingEffect();
     }
 
-    private void StartSprint()
+    private void StopSprintLogic()
     {
-        isSprinting = true;
-        moveProvider.moveSpeed = sprintSpeed;
-    }
-
-    private void StopSprint()
-    {
-        isSprinting = false;
-        moveProvider.moveSpeed = normalSpeed;
+        if (isSprinting)
+        {
+            isSprinting = false;
+            moveProvider.moveSpeed = defaultSpeed;
+        }
     }
 
     private void UpdateStaminaBar()
     {
         if (staminaBar != null)
-        {
             staminaBar.fillAmount = currentStamina / maxStamina;
+    }
+
+    private void HandleBlinkingEffect()
+    {
+        if (staminaBar != null)
+        {
+            Color c = staminaBar.color;
+            c.a = isExhausted ? Mathf.PingPong(Time.time * 5f, 1f) : 1f;
+            staminaBar.color = c;
+        }
+    }
+
+    private void PlayTiredSound()
+    {
+        if (tiredSound != null && audioSource != null && !hasPlayedTiredSound)
+        {
+            audioSource.PlayOneShot(tiredSound);
+            hasPlayedTiredSound = true;
         }
     }
 }
