@@ -20,7 +20,7 @@ public class VRSprintStamina : MonoBehaviour
 
     [Header("Estamina")]
     public float maxStamina = 5f;
-    public float staminaDrainRate = 1f;
+    public float staminaDrainRate = 2f;
     public float staminaRecoveryRate = 0.75f;
     public float recoveryDelay = 1.5f;
 
@@ -99,6 +99,11 @@ public class VRSprintStamina : MonoBehaviour
         {
             isSprinting = false;
             moveProvider.moveSpeed = defaultSpeed;
+            
+            // Esto fuerza al CharacterController a recalcular su posición 
+            // respecto a los muros cercanos al detener el sprint
+            var cc = moveProvider.gameObject.GetComponent<CharacterController>();
+            if(cc != null) cc.Move(Vector3.zero); 
         }
     }
 
