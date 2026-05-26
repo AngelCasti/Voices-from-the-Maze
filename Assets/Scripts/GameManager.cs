@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
     [Tooltip("Arrastra aquí el objeto vacío Menu_Derrota que creaste")]
     public GameObject menuDerrota;
 
+    [Header("Paneles del Menú Principal")]
+    public GameObject panelInicio;
+    public GameObject panelCreditos;
+    public GameObject panelOpciones;
+
     void Start()
     {
         // Nos aseguramos de que el menú empiece desactivado al iniciar la partida
@@ -66,14 +71,33 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // FUNCIÓN PARA EL BOTÓN "REGRESAR" (Menú Principal)
-    public void RegresarAlMenu()
+    // --- NAVEGACIÓN HACIA ADELANTE ---
+
+    public void MostrarCreditos()
     {
-        // Aseguramos que el tiempo corra normal antes de salir
-        Time.timeScale = 1f; 
-        
-        // Cargamos tu escena principal. 
-        // Reemplaza "MenuPrincipal" por el nombre exacto de tu escena del menú.
-        SceneManager.LoadScene("Interfaz"); 
+        if (panelInicio != null && panelCreditos != null)
+        {
+            panelInicio.SetActive(false);    // Oculta los botones principales
+            panelCreditos.SetActive(true);   // Muestra los créditos
+        }
+    }
+
+    public void MostrarOpciones()
+    {
+        if (panelInicio != null && panelOpciones != null)
+        {
+            panelInicio.SetActive(false);    // Oculta los botones principales
+            panelOpciones.SetActive(true);   // Muestra el "Cómo jugar"
+        }
+    }
+
+    // --- NAVEGACIÓN HACIA ATRÁS (Botones Regresar) ---
+
+    public void VolverAlInicio()
+    {
+        // Apagamos los paneles secundarios y encendemos el principal
+        if (panelInicio != null) panelInicio.SetActive(true);
+        if (panelCreditos != null) panelCreditos.SetActive(false);
+        if (panelOpciones != null) panelOpciones.SetActive(false);
     }
 }
