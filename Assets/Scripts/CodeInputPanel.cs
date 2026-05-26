@@ -12,6 +12,9 @@ public class CodeInputPanel : MonoBehaviour
     private int[] playerAttempt = new int[3];
     private int currentIndex = 0;
 
+    [Header("Colores Originales")]
+    public Color[] originalColors = new Color[3];
+
     public void AddDigit(int digit)
     {
         if (currentIndex < 3)
@@ -39,14 +42,32 @@ public class CodeInputPanel : MonoBehaviour
         if (isCorrect)
         {
             Debug.Log("¡Puerta abierta!");
-            // Aquí puedes activar una animación o cambiar el color de los textos a verde fijo
+            // Ponemos los 3 en verde al acertar
+            for(int i = 0; i < screenSlots.Length; i++)
+            {
+                screenSlots[i].color = Color.green;
+            }
         }
         else
         {
-            Debug.Log("Código incorrecto, reiniciando...");
-            // Opcional: Cambia temporalmente el color de los slots a rojo antes de resetear
-            foreach(var slot in screenSlots) slot.color = Color.red; 
-            Invoke("ResetPanel", 1f); 
+            Debug.Log("Código incorrecto, mostrando error...");
+            // Ponemos todos en rojo inmediatamente
+            foreach(var slot in screenSlots) slot.color = Color.red;
+            
+            // Esperamos 1.5 segundos y llamamos a la función que restaura los colores
+            Invoke("RestoreOriginalColors", 1.5f);
+        }
+    }
+
+    private void RestoreOriginalColors()
+    {
+        // Limpiamos el intento (asumiendo que tienes una función para resetear el input)
+        ResetPanel(); 
+
+        // Restauramos cada uno a su color original definido en el array
+        for(int i = 0; i < screenSlots.Length; i++)
+        {
+            screenSlots[i].color = originalColors[i];
         }
     }
 
