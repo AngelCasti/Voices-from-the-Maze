@@ -1,9 +1,13 @@
+using System.Collections; // <-- ¡ESTA ES LA QUE FALTA!
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Video;
 
 public class MonsterPatrolChase : MonoBehaviour
 {
+    public GameManager gameManager; // <-- Añade esta línea
+
     [Header("Referencias")]
     public Transform player;
     public Transform[] waypoints;
@@ -187,6 +191,30 @@ public class MonsterPatrolChase : MonoBehaviour
 
         Debug.Log("JUMPSCARE");
     }
+
+    // Este nuevo método se encarga de pausar el tiempo entre el susto y el menú
+    IEnumerator SecuenciaJumpscareYMenu(){
+        // 1. Activamos el sonido y la imagen del susto
+        if (jumpscareAudio != null) jumpscareAudio.Play();
+        if (jumpscarePanel != null) jumpscarePanel.SetActive(true);
+
+        Debug.Log("JUMPSCARE INICIADO");
+
+        // 2. Esperamos 2.5 segundos (puedes cambiar este número si el audio es más corto o largo)
+        yield return new WaitForSeconds(2.5f);
+
+        // 3. Quitamos la imagen del jumpscare de la pantalla para que no estorbe
+        if (jumpscarePanel != null) jumpscarePanel.SetActive(false);
+
+        // 4. Ahora sí, activamos la interfaz de Game Over limpia y libre de obstáculos
+        if (gameManager != null)
+        {
+            gameManager.Derrota();
+        }
+
+        Debug.Log("MENÚ DE DERROTA ACTIVADO");
+    }
+    
 
     void UpdateAnimations()
     {
