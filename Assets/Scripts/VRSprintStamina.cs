@@ -15,12 +15,12 @@ public class VRSprintStamina : MonoBehaviour
     private bool hasPlayedTiredSound = false;
 
     [Header("Velocidades")]
-    public float normalSpeed = 1.5f;
-    public float sprintSpeed = 3.0f;
+    public float normalSpeed = 2.0f;
+    public float sprintSpeed = 4.0f;
 
     [Header("Estamina")]
     public float maxStamina = 5f;
-    public float staminaDrainRate = 2f;
+    public float staminaDrainRate = 1.0f;
     public float staminaRecoveryRate = 0.75f;
     public float recoveryDelay = 1.5f;
 
