@@ -9,10 +9,18 @@ public class VRSprintStamina : MonoBehaviour
     public ContinuousMoveProviderBase moveProvider;
     private float defaultSpeed;
 
-    [Header("Audio")]
+    [Header("Audio cansancio")]
     public AudioSource audioSource;
     public AudioClip tiredSound;
     private bool hasPlayedTiredSound = false;
+
+    [Header("Audio pasos")]
+    public AudioSource footstepAudioSource;
+    public AudioClip walkStepSound;
+    public AudioClip runStepSound;
+    public float walkStepInterval = 0.55f;
+    public float runStepInterval = 0.32f;
+    private float stepTimer = 0f;
 
     [Header("Velocidades")]
     public float normalSpeed = 2.0f;
@@ -32,11 +40,16 @@ public class VRSprintStamina : MonoBehaviour
     private float lastSprintTime;
     private bool isSprinting;
     private bool isExhausted = false;
+    private CharacterController characterController;
 
     private void Awake()
     {
         currentStamina = maxStamina;
-        defaultSpeed = moveProvider.moveSpeed;
+
+        if (moveProvider != null)
+            defaultSpeed = moveProvider.moveSpeed;
+
+        characterController = moveProvider.gameObject.GetComponent<CharacterController>();
 
         sprintAction = new InputAction("Sprint", InputActionType.Button);
         sprintAction.AddBinding("<OculusTouchController>{RightHand}/thumbstickClicked");
@@ -44,25 +57,31 @@ public class VRSprintStamina : MonoBehaviour
         sprintAction.AddBinding("<Keyboard>/leftShift");
     }
 
-    private void OnEnable() { sprintAction.Enable(); }
-    private void OnDisable() { sprintAction.Disable(); }
+    private void OnEnable() 
+    { 
+        sprintAction.Enable(); 
+    }
+
+    private void OnDisable() 
+    { 
+        sprintAction.Disable(); 
+    }
 
     private void Update()
     {
-        if (moveProvider == null) return;
+        if (moveProvider == null || characterController == null) return;
 
-        bool isMoving = moveProvider.gameObject.GetComponent<CharacterController>().velocity.magnitude > 0.1f;
+        bool isMoving = characterController.velocity.magnitude > 0.1f;
         bool sprintButtonPressed = sprintAction.IsPressed();
 
-        // 1. Lógica de Sprint (Drenaje)
         if (sprintButtonPressed && isMoving && currentStamina > 0f && !isExhausted)
         {
             isSprinting = true;
             moveProvider.moveSpeed = sprintSpeed;
-            
+
             currentStamina -= staminaDrainRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-            lastSprintTime = Time.time; // Reiniciamos el tiempo de espera para recuperar
+            lastSprintTime = Time.time;
 
             if (currentStamina <= 0f)
             {
@@ -73,9 +92,8 @@ public class VRSprintStamina : MonoBehaviour
         }
         else
         {
-            // 2. Lógica de Recuperación
             StopSprintLogic();
-            
+
             if (Time.time >= lastSprintTime + recoveryDelay)
             {
                 currentStamina += staminaRecoveryRate * Time.deltaTime;
@@ -89,6 +107,7 @@ public class VRSprintStamina : MonoBehaviour
             }
         }
 
+        HandleFootsteps(isMoving, isSprinting);
         UpdateStaminaBar();
         HandleBlinkingEffect();
     }
@@ -99,11 +118,33 @@ public class VRSprintStamina : MonoBehaviour
         {
             isSprinting = false;
             moveProvider.moveSpeed = defaultSpeed;
-            
-            // Esto fuerza al CharacterController a recalcular su posición 
-            // respecto a los muros cercanos al detener el sprint
-            var cc = moveProvider.gameObject.GetComponent<CharacterController>();
-            if(cc != null) cc.Move(Vector3.zero); 
+
+            if (characterController != null)
+                characterController.Move(Vector3.zero);
+        }
+    }
+
+    private void HandleFootsteps(bool isMoving, bool sprinting)
+    {
+        if (!isMoving)
+        {
+            stepTimer = 0f;
+            return;
+        }
+
+        stepTimer += Time.deltaTime;
+
+        float currentInterval = sprinting ? runStepInterval : walkStepInterval;
+        AudioClip currentClip = sprinting ? runStepSound : walkStepSound;
+
+        if (stepTimer >= currentInterval)
+        {
+            if (footstepAudioSource != null && currentClip != null)
+            {
+                footstepAudioSource.PlayOneShot(currentClip);
+            }
+
+            stepTimer = 0f;
         }
     }
 
