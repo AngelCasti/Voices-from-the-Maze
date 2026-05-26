@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class MonsterPatrolChase : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MonsterPatrolChase : MonoBehaviour
     [Header("Jumpscare")]
     public AudioSource jumpscareAudio;
     public GameObject jumpscarePanel;
+    public GameManager gameManager;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -47,6 +49,12 @@ public class MonsterPatrolChase : MonoBehaviour
         if (waypoints.Length > 0)
         {
             agent.SetDestination(waypoints[currentWaypoint].position);
+        }
+
+        // Busca GameManager para el menu final
+        if (gameManager == null)
+        {
+            gameManager = FindObjectOfType<GameManager>();
         }
     }
 
@@ -110,24 +118,37 @@ public class MonsterPatrolChase : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    void TriggerJumpscare()
-    {
+    void TriggerJumpscare(){
         hasJumpscared = true;
-
         agent.isStopped = true;
 
-        if (jumpscareAudio != null)
-        {
-            jumpscareAudio.Play();
-        }
-
-        if (jumpscarePanel != null)
-        {
-            jumpscarePanel.SetActive(true);
-        }
-
-        Debug.Log("JUMPSCARE");
+        // Iniciamos la secuencia de tiempo
+        StartCoroutine(SecuenciaJumpscareYMenu());
     }
+
+    // Este nuevo método se encarga de pausar el tiempo entre el susto y el menú
+    IEnumerator SecuenciaJumpscareYMenu(){
+        // 1. Activamos el sonido y la imagen del susto
+        if (jumpscareAudio != null) jumpscareAudio.Play();
+        if (jumpscarePanel != null) jumpscarePanel.SetActive(true);
+
+        Debug.Log("JUMPSCARE INICIADO");
+
+        // 2. Esperamos 2.5 segundos (puedes cambiar este número si el audio es más corto o largo)
+        yield return new WaitForSeconds(2.5f);
+
+        // 3. Quitamos la imagen del jumpscare de la pantalla para que no estorbe
+        if (jumpscarePanel != null) jumpscarePanel.SetActive(false);
+
+        // 4. Ahora sí, activamos la interfaz de Game Over limpia y libre de obstáculos
+        if (gameManager != null)
+        {
+            gameManager.Derrota();
+        }
+
+        Debug.Log("MENÚ DE DERROTA ACTIVADO");
+    }
+    
 
     void UpdateAnimations()
     {
