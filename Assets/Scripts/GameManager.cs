@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
             if (camaraVR != null)
             {
                 // 2. Calculamos una posición a 2 metros en frente de la cámara
-                Vector3 posicionFrente = camaraVR.position + (camaraVR.forward * 2.0f);
+                Vector3 posicionFrente = camaraVR.position + (camaraVR.forward * 3.5f);
                 
                 // Ajustamos la altura del menú para que quede a la altura de los ojos
                 posicionFrente.y = camaraVR.position.y; 
