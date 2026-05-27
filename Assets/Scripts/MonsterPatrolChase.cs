@@ -189,6 +189,7 @@ public class MonsterPatrolChase : MonoBehaviour
         if (jumpscareAudio != null)
             jumpscareAudio.Play();
 
+        StartCoroutine(SecuenciaJumpscareYMenu());
         Debug.Log("JUMPSCARE");
     }
 
