@@ -17,10 +17,8 @@ public class VRSprintStamina : MonoBehaviour
     [Header("Audio pasos")]
     public AudioSource footstepAudioSource;
     public AudioClip walkStepSound;
-    public AudioClip runStepSound;
     public float walkStepInterval = 0.55f;
-    public float runStepInterval = 0.32f;
-    private float stepTimer = 0f;
+    private float stepTimer = 999f;
 
     [Header("Velocidades")]
     public float normalSpeed = 2.0f;
@@ -124,29 +122,33 @@ public class VRSprintStamina : MonoBehaviour
         }
     }
 
-    private void HandleFootsteps(bool isMoving, bool sprinting)
+   private void HandleFootsteps(bool isMoving, bool sprinting)
+{
+    if (footstepAudioSource == null || walkStepSound == null)
+        return;
+
+    footstepAudioSource.clip = walkStepSound;
+    footstepAudioSource.loop = true;
+
+    if (isMoving)
     {
-        if (!isMoving)
+        footstepAudioSource.pitch = sprinting ? 1.6f : 1.2f;
+
+        if (!footstepAudioSource.isPlaying)
         {
-            stepTimer = 0f;
-            return;
-        }
-
-        stepTimer += Time.deltaTime;
-
-        float currentInterval = sprinting ? runStepInterval : walkStepInterval;
-        AudioClip currentClip = sprinting ? runStepSound : walkStepSound;
-
-        if (stepTimer >= currentInterval)
-        {
-            if (footstepAudioSource != null && currentClip != null)
-            {
-                footstepAudioSource.PlayOneShot(currentClip);
-            }
-
-            stepTimer = 0f;
+            footstepAudioSource.Play();
         }
     }
+    else
+    {
+        if (footstepAudioSource.isPlaying)
+        {
+            footstepAudioSource.Stop();
+        }
+
+        footstepAudioSource.pitch = 1f;
+    }
+}
 
     private void UpdateStaminaBar()
     {

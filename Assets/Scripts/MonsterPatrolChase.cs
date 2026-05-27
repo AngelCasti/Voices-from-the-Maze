@@ -216,11 +216,10 @@ public class MonsterPatrolChase : MonoBehaviour
     }
     
 
-    void UpdateAnimations()
+    void UpdateAnimations() 
     {
         if (animator == null) return;
 
-        bool isMoving = agent.velocity.magnitude > 0.1f;
-        animator.SetBool("isWalking", isMoving);
+        animator.SetBool("isWalking", true);
     }
 }
