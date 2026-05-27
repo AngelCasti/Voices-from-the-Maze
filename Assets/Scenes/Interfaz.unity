@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.016165055, g: 0.012409981, b: 0.008882953, a: 1}
+  m_IndirectSpecularColor: {r: 0.012110051, g: 0.009756925, b: 0.007242099, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2364,13 +2364,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456471402}
-  m_LocalRotation: {x: -0.126824, y: -0.1388932, z: 0.21839374, w: 0.9575639}
+  m_LocalRotation: {x: -0.13429575, y: -0.14059393, z: 0.21730277, w: 0.9565445}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -10.499, y: -19.079, z: 27.465}
+  m_LocalEulerAnglesHint: {x: -11.292, y: -19.499, z: 27.544}
 --- !u!1 &475174919
 GameObject:
   m_ObjectHideFlags: 0
@@ -5393,6 +5393,11 @@ MonoBehaviour:
   moveProvider: {fileID: 1186482244}
   audioSource: {fileID: 0}
   tiredSound: {fileID: 0}
+  footstepAudioSource: {fileID: 0}
+  walkStepSound: {fileID: 0}
+  runStepSound: {fileID: 0}
+  walkStepInterval: 0.55
+  runStepInterval: 0.32
   normalSpeed: 1.5
   sprintSpeed: 3
   maxStamina: 5
