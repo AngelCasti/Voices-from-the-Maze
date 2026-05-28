@@ -100,4 +100,12 @@ public class GameManager : MonoBehaviour
         if (panelCreditos != null) panelCreditos.SetActive(false);
         if (panelOpciones != null) panelOpciones.SetActive(false);
     }
+
+    // Función para cerrar el juego por completo
+    public void SalirDelJuego(){
+        Debug.Log("El jugador ha salido del juego.");
+        
+        // Esta línea cierra la aplicación construida (.exe, .apk, etc.)
+        Application.Quit();
+    }
 }
