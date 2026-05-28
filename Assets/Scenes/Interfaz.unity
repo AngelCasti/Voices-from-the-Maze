@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.012110048, g: 0.009756928, b: 0.007242103, a: 1}
+  m_IndirectSpecularColor: {r: 0.0011674205, g: 0.0007260974, b: 0.00015148995, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2491,13 +2491,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456471402}
-  m_LocalRotation: {x: -0.13429575, y: -0.14059393, z: 0.21730277, w: 0.9565445}
+  m_LocalRotation: {x: -0.25369564, y: 0.9274717, z: 0.22086453, w: -0.16325928}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -11.292, y: -19.499, z: 27.544}
+  m_LocalEulerAnglesHint: {x: -19.078, y: -513.959, z: -35.047}
 --- !u!1 &475174919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,7 +2754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210.2513, y: -68}
+  m_AnchoredPosition: {x: -210.2513, y: -59}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &606034970
@@ -2777,7 +2777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Linterna
+  m_text: "Tomar \nlinterna"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
