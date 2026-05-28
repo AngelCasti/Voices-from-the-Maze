@@ -201,19 +201,32 @@ public class MonsterPatrolChase : MonoBehaviour
 
         Debug.Log("JUMPSCARE INICIADO");
 
-        // 2. Esperamos 2.5 segundos (puedes cambiar este número si el audio es más corto o largo)
+        // 2. Esperamos los 2.5 segundos que dura el susto en pantalla
         yield return new WaitForSeconds(2.5f);
 
-        // 3. Quitamos la imagen del jumpscare de la pantalla para que no estorbe
+        // --- ¡AQUÍ ESTÁ EL CAMBIO PARA LIMPIAR LA ESCENA! ---
+        
+        // 3. Forzamos al video/screamer a detenerse por completo para que no estorbe
+        if (screamerVideo != null) 
+        {
+            screamerVideo.Stop();
+        }
+
+        // 4. Quitamos el panel del jumpscare de la pantalla
         if (jumpscarePanel != null) jumpscarePanel.SetActive(false);
 
-        // 4. Ahora sí, activamos la interfaz de Game Over limpia y libre de obstáculos
+        // 5. Ahora sí, activamos la interfaz de Game Over limpia
         if (gameManager != null)
         {
             gameManager.Derrota();
         }
 
-        Debug.Log("MENÚ DE DERROTA ACTIVADO");
+        Debug.Log("MENÚ DE DERROTA ACTIVADO Y SCREAMER DETENIDO");
+
+        // 6. DETONANTE FINAL: Eliminamos por completo al monstruo del juego
+        // 'this.gameObject' es el Monstruo. Al destruirlo, se apagarán sus scripts,
+        // sus audios de persecución, sus pasos y desaparecerá del mapa en 3D.
+        Destroy(this.gameObject);
     }
     
 
