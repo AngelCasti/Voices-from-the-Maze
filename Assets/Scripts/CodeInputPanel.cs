@@ -15,6 +15,10 @@ public class CodeInputPanel : MonoBehaviour
     [Header("Colores Originales")]
     public Color[] originalColors = new Color[3];
 
+    [Header("Escena de Victoria")]
+    public GameObject gameOverPanel; // El panel que contiene el script de tu compañero
+    public string victoriaSceneName = "Victoria"; // Nombre de la escena a cargar
+
     public void AddDigit(int digit)
     {
         if (currentIndex < 3)
@@ -47,6 +51,7 @@ public class CodeInputPanel : MonoBehaviour
             {
                 screenSlots[i].color = Color.green;
             }
+            UnityEngine.SceneManagement.SceneManager.LoadScene(victoriaSceneName);
         }
         else
         {
